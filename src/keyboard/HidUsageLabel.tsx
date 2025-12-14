@@ -1,3 +1,4 @@
+import { useUserPreferences } from "../context/user-preferences";
 import {
   hid_usage_get_labels,
   hid_usage_page_and_id_from_usage,
@@ -7,12 +8,14 @@ export interface HidUsageLabelProps {
   hid_usage: number;
 }
 export const HidUsageLabel = ({ hid_usage }: HidUsageLabelProps) => {
+  const { keyboard_lang_layout } = useUserPreferences();
   let [page, id] = hid_usage_page_and_id_from_usage(hid_usage);
 
   // TODO: Do something with implicit mods!
   page &= 0xff;
 
   let labels = hid_usage_get_labels(page, id, {
+    keyboard_lang_layout,
     removePrefix: true,
   });
 
