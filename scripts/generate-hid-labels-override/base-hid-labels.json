@@ -1,17 +1,5 @@
 {
     "7": {
-        "5": {
-            "short": "b",
-            "secondary": "B"
-        },
-        "17": {
-            "short": "n",
-            "secondary": "N"
-        },
-        "25": {
-            "short": "v",
-            "secondary": "V"
-        },
         "30": {
             "short": "1",
             "secondary": "!"
@@ -50,13 +38,11 @@
         },
         "39": {
             "short": "0",
-            "secondary": "=",
-            "tertiary": "}"
+            "secondary": "="
         },
         "40": {
-            "short": "⏎",
-            "med": "⏎",
-            "long": "Return"
+            "short": "Ret",
+            "med": "Return"
         },
         "41": {
             "short": "Esc",
@@ -72,62 +58,43 @@
             "med": "Space"
         },
         "45": {
-            "short": "'",
-            "med": "Dash",
-            "secondary": "?",
-            "tertiary": "`"
+            "short": "-",
+            "med": "Dash"
         },
         "46": {
-            "short": "ì",
-            "med": "Equals",
-            "secondary": "^",
-            "tertiary": "~"
+            "short": "=",
+            "med": "Equals"
         },
         "47": {
-            "short": "è",
-            "secondary": "é",
-            "tertiary": "["
+            "short": "{"
         },
         "48": {
-            "short": "+",
-            "secondary": "*",
-            "tertiary": "]"
+            "short": "}"
         },
         "49": {
-            "short": "ù",
-            "secondary": "§"
+            "short": "\\"
         },
         "50": {
             "short": "NUHS",
             "long": "NonUS Hash"
         },
         "51": {
-            "short": "ò",
-            "secondary": "ç",
-            "tertiary": "@"
+            "short": ";"
         },
         "52": {
-            "short": "à",
-            "secondary": "°",
-            "tertiary": "#"
+            "short": "'"
         },
         "53": {
-            "short": "\\",
-            "secondary": "|",
-            "tertiary": "¬"
+            "short": "`"
         },
         "54": {
-            "short": ",",
-            "secondary": ";"
+            "short": ","
         },
         "55": {
-            "short": ".",
-            "secondary": ":",
-            "tertiary": "·"
+            "short": "."
         },
         "56": {
-            "short": "-",
-            "secondary": "_"
+            "short": "/"
         },
         "57": {
             "short": "Cap",
@@ -238,11 +205,6 @@
             "med": ". Del",
             "long": ". Delete"
         },
-        "100": {
-            "short": "<",
-            "secondary": ">",
-            "tertiary": "«"
-        },
         "101": {
             "short": "Appl",
             "med": "Appl",
@@ -251,6 +213,9 @@
         "102": {
             "short": "Power",
             "med": "Power"
+        },
+        "100": {
+            "short": "NUBS"
         },
         "103": {
             "short": "="
