@@ -18,6 +18,7 @@ import { GenericModal } from "./GenericModal";
 import { useKeymap } from "./context/keymap";
 import { useBehaviors } from "./keyboard/Keyboard";
 import { hid_usage_page_and_id_from_usage } from "./hid-usages";
+import { KeyboardLayoutPicker } from "./keyboard/KeyboardLayoutPicker";
 
 export interface AppHeaderProps {
   connectedDeviceLabel?: string;
@@ -69,7 +70,7 @@ export const AppHeader = ({
   useSub("rpc_notification.keymap.unsavedChangesStatusChanged", (unsaved) =>
     setUnsaved(unsaved)
   );
-  
+
   const onExportKeymap = useCallback(() => {
     async function doExport() {
       console.log("Exporting keymap", keymap);
@@ -88,7 +89,7 @@ export const AppHeader = ({
               const param2Type = behavior.metadata[0]?.param2[0]?.name
               const param1Meta = param1Type === "Key" ? hid_usage_page_and_id_from_usage(binding.param1) : undefined
               const param2Meta = param2Type === "Key" ? hid_usage_page_and_id_from_usage(binding.param1) : undefined
-              
+
               if (param1Meta) {
                 console.log("param1Meta", param1Meta)
 
@@ -116,7 +117,7 @@ export const AppHeader = ({
       URL.revokeObjectURL(url);
       a.remove();
     }
-    
+
     doExport()
   }, [keymap, behaviors]);
 
@@ -179,6 +180,7 @@ export const AppHeader = ({
         </Popover>
       </MenuTrigger>
       <div className="flex justify-end gap-1 px-2">
+        <KeyboardLayoutPicker />
         {onUndo && (
           <Tooltip label="Undo">
             <Button
