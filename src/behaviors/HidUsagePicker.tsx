@@ -21,7 +21,7 @@ import {
 } from "../hid-usages";
 import { useCallback, useMemo, useState } from "react";
 import { ChevronDown } from "lucide-react";
-
+import { useUserPreferences } from "../context/user-preferences";
 export interface HidUsagePage {
   id: number;
   min?: number;
@@ -80,6 +80,7 @@ const UsageSection = ({ id, min, max }: UsageSectionProps) => {
 };
 
 const UsageSectionGrid = ({ id, min, max, onMouseOver }: UsageSectionGridProps) => {
+  const { keyboard_lang_layout } = useUserPreferences();
   const info = useMemo(() => hid_usage_page_get_ids(id), [id]);
 
   let usages = useMemo(() => {
@@ -105,7 +106,7 @@ const UsageSectionGrid = ({ id, min, max, onMouseOver }: UsageSectionGridProps) 
             className="bg-white rounded border-2 w-16 h-16 overflow-hidden cursor-pointer hover:scale-150 transition-transform"
           >
             {({isSelected}) => {
-              const labels = hid_usage_get_labels(id, i.Id, { removePrefix: true })
+              const labels = hid_usage_get_labels(id, i.Id, { keyboard_lang_layout, removePrefix: true })
               return (
               <div className={`p-2 flex justify-center items-center relative w-full h-full ${isSelected ? 'bg-primary text-white' : ''}`}
                 onMouseEnter={() => onMouseOver ? onMouseOver({id, i}) : {}}
