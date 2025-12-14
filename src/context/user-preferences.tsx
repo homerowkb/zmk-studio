@@ -3,7 +3,7 @@ import { KEYBOARD_LANG_LAYOUTS } from '../hid-usage-name-overrides';
 
 interface UserPreferencesContextValue {
     keyboard_lang_layout: KEYBOARD_LANG_LAYOUTS;
-    set_keyboard_lang_layout?: Dispatch<SetStateAction<KEYBOARD_LANG_LAYOUTS>>;
+    set_keyboard_lang_layout: Dispatch<SetStateAction<KEYBOARD_LANG_LAYOUTS>>;
 }
 
 const UserPreferencesContext = createContext<UserPreferencesContextValue | undefined>(undefined);
