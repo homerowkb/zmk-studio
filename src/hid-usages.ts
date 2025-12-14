@@ -33,13 +33,13 @@ export const hid_usage_get_label = (
   usage_id: number,
   options: {
     keyboard_lang_layout?: KEYBOARD_LANG_LAYOUTS;
-  } = { }
+  } = {}
 ): string | undefined => {
   const overrides = get_hid_usage_name_overrides(options.keyboard_lang_layout ?? KEYBOARD_LANG_LAYOUTS["US-INTERNATIONAL"]);
   return overrides[usage_page.toString()]?.[usage_id.toString()]?.short ||
-  UsagePages.find((p) => p.Id === usage_page)?.UsageIds?.find(
-    (u) => u.Id === usage_id
-  )?.Name;
+    UsagePages.find((p) => p.Id === usage_page)?.UsageIds?.find(
+      (u) => u.Id === usage_id
+    )?.Name;
 }
 
 export const hid_usage_get_labels = (
@@ -48,7 +48,7 @@ export const hid_usage_get_labels = (
   options: {
     keyboard_lang_layout?: KEYBOARD_LANG_LAYOUTS;
     removePrefix?: boolean;
-  } = { }
+  } = {}
 ): HidLabels => {
   const overrides = get_hid_usage_name_overrides(options.keyboard_lang_layout ?? KEYBOARD_LANG_LAYOUTS["US-INTERNATIONAL"]);
   const labels = overrides[usage_page.toString()]?.[usage_id.toString()] || {
@@ -62,6 +62,7 @@ export const hid_usage_get_labels = (
       med: remove_prefix(labels.med),
       long: remove_prefix(labels.long),
       secondary: labels.secondary,
+      tertiary: labels.tertiary,
     };
   }
   return labels;

@@ -20,13 +20,26 @@ export const HidUsageLabel = ({ hid_usage }: HidUsageLabelProps) => {
   });
 
   return (
-    <span
-      className="@[10em]:before:content-[attr(data-long-content)] @[6em]:before:content-[attr(data-med-content)] before:content-[attr(aria-label)]"
-      aria-label={(labels.short)}
-      data-med-content={(labels.med || labels.short)}
-      data-long-content={(
-        labels.long || labels.med || labels.short
+    <>
+      <span
+        className="@[10em]:before:content-[attr(data-long-content)] @[6em]:before:content-[attr(data-med-content)] before:content-[attr(aria-label)]"
+        aria-label={(labels.short)}
+        data-med-content={(labels.med || labels.short)}
+        data-long-content={(
+          labels.long || labels.med || labels.short
+        )}
+      />
+
+      {labels.secondary && (
+        <p className="absolute top-1 right-1 text-xs opacity-80">
+          {labels.secondary}
+        </p>
       )}
-    />
+      {labels.tertiary && (
+        <p className="absolute bottom-1 right-1 text-xs opacity-80">
+          {labels.tertiary}
+        </p>
+      )}
+    </>
   );
 };
