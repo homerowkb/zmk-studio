@@ -16,7 +16,8 @@ RUN dnf install -y \
   librsvg2-devel \
   lld llvm \
   mingw64-nsis \
-  clang-cl
+  clang-cl \
+  libudev-dev
 
 RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
 
