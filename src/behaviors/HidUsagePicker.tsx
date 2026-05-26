@@ -39,9 +39,7 @@ export interface UsageSectionGridProps {
   id: number;
   min?: number;
   max?: number;
-  onMouseOver?: (mouseOverData: {
-    id: number, i: UsageId
-  }) => void;
+  onMouseOver?: (mouseOverData: { id: number; i: UsageId } | null) => void;
 }
 
 type UsageSectionProps = HidUsagePage;
@@ -80,7 +78,6 @@ const UsageSection = ({ id, min, max }: UsageSectionProps) => {
 };
 
 const UsageSectionGrid = ({ id, min, max, onMouseOver }: UsageSectionGridProps) => {
-  const { keyboard_lang_layout } = useUserPreferences();
   const info = useMemo(() => hid_usage_page_get_ids(id), [id]);
 
   let usages = useMemo(() => {
@@ -215,7 +212,7 @@ export const HidUsagePicker = ({
     [value]
   );
 
-  const [tooltipData, setTooltipData] = useState(null);
+  const [tooltipData, setTooltipData] = useState<{ id: number; i: UsageId } | null>(null);
 
   console.log("A", value ? mask_mods(value) : null)
 
