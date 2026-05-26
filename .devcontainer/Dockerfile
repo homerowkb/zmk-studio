@@ -12,12 +12,15 @@ RUN dnf install -y \
   curl \
   wget \
   file \
-  libappindicator-gtk3-devel \
+  libayatana-appindicator-gtk3-devel \
   librsvg2-devel \
   lld llvm \
   mingw64-nsis \
-  clang-cl \
-  libudev-dev
+  clang \
+  systemd-devel \
+  mingw64-binutils \
+  mingw64-gcc \
+  mingw64-gcc-c++
 
 RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
 
@@ -30,5 +33,6 @@ ENV PATH="/root/.cargo/bin:${PATH}"
 # RUN cp -r nsis-3.08/Plugins/** /usr/share/nsis/Plugins/
 
 RUN rustup target add x86_64-pc-windows-msvc
+RUN rustup target add x86_64-pc-windows-gnu
 
 RUN cargo install --locked cargo-xwin
