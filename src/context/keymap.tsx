@@ -5,22 +5,23 @@ import { useConnectedDeviceData } from '../rpc/useConnectedDeviceData';
 interface KeymapContextValue {
     keymap: Keymap | undefined;
     setKeymap: Dispatch<SetStateAction<Keymap | undefined>>;
+    updateKeymap: () => void;
 }
 
 const KeymapContext = createContext<KeymapContextValue | undefined>(undefined);
 
 export const KeymapProvider = ({ children }: PropsWithChildren<{}>) => {
-    const [keymap, setKeymap] = useConnectedDeviceData<Keymap>(
+    const [keymap, setKeymap, updateKeymap] = useConnectedDeviceData<Keymap>(
         { keymap: { getKeymap: true } },
         (keymap) => {
-          console.log("Got the keymap!");
-          return keymap?.keymap?.getKeymap;
+            console.log("Got the keymap!");
+            return keymap?.keymap?.getKeymap;
         },
         true
-      );
+    );
 
     return (
-        <KeymapContext.Provider value={{ keymap, setKeymap }}>
+        <KeymapContext.Provider value={{ keymap, setKeymap, updateKeymap }}>
             {children}
         </KeymapContext.Provider>
     );
