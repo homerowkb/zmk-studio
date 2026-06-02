@@ -215,6 +215,7 @@ export default function Keyboard() {
   const {
     keymap,
     setKeymap,
+    updateKeymap,
   } = useKeymap();
   const [keymapScale, setKeymapScale] = useLocalStorageState<LayoutZoom>("keymapScale", "auto", {
     deserialize: deserializeLayoutZoom,
@@ -289,11 +290,12 @@ export default function Keyboard() {
 
       if (resp.keymap?.profileSelect?.ok !== undefined) {
         setActiveProfile(resp.keymap.profileSelect.ok);
+        updateKeymap();
       } else {
         console.error("Failed to select profile", resp.keymap?.profileSelect?.err);
       }
     },
-    [conn]
+    [conn, updateKeymap]
   );
 
   let doUpdateBinding = useCallback(
