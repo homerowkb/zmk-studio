@@ -278,6 +278,11 @@ export default function Keyboard() {
         return;
       }
 
+      let respSave = await call_rpc(conn.conn, { keymap: { saveChanges: true } });
+      if (!respSave.keymap?.saveChanges || respSave.keymap?.saveChanges.err) {
+        console.error("Failed to save changes", respSave.keymap?.saveChanges);
+      }
+
       const resp = await call_rpc(conn.conn, {
         keymap: { profileSelect: profile },
       });
