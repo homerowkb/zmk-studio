@@ -309,9 +309,7 @@ export default function Keyboard() {
       });
 
       if (resp.keymap?.cloneLayer?.ok) {
-        if (destLayer === selectedLayerIndex) {
-          updateKeymap();
-        }
+        updateKeymap();
       } else {
         console.error("Failed to clone layer", resp.keymap?.cloneLayer?.err);
       }
