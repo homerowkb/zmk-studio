@@ -298,6 +298,23 @@ export default function Keyboard() {
     [conn, updateKeymap]
   );
 
+  let doCloneProfile = useCallback(
+    async (destProfile: number) => {
+      if (!conn.conn) {
+        return;
+      }
+
+      const resp = await call_rpc(conn.conn, {
+        keymap: { cloneProfile: { sourceProfile: activeProfile, destProfile } },
+      });
+
+      if (!resp.keymap?.cloneProfile?.ok) {
+        console.error("Failed to clone profile", resp.keymap?.cloneProfile?.err);
+      }
+    },
+    [conn, activeProfile]
+  );
+
   let doUpdateBinding = useCallback(
     (binding: BehaviorBinding) => {
       if (!keymap || selectedKeyPosition === undefined) {
@@ -576,6 +593,7 @@ export default function Keyboard() {
             profileCount={profileCount}
             activeProfile={activeProfile}
             onProfileClicked={doSelectProfile}
+            onCloneProfile={doCloneProfile}
           />
         )}
 
