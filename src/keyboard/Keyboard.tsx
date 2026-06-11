@@ -298,6 +298,27 @@ export default function Keyboard() {
     [conn, updateKeymap]
   );
 
+  let doCloneLayer = useCallback(
+    async (sourceLayer: number, destLayer: number) => {
+      if (!conn.conn) {
+        return;
+      }
+
+      const resp = await call_rpc(conn.conn, {
+        keymap: { cloneLayer: { sourceLayer, destLayer } },
+      });
+
+      if (resp.keymap?.cloneLayer?.ok) {
+        if (destLayer === selectedLayerIndex) {
+          updateKeymap();
+        }
+      } else {
+        console.error("Failed to clone layer", resp.keymap?.cloneLayer?.err);
+      }
+    },
+    [conn, selectedLayerIndex, updateKeymap]
+  );
+
   let doCloneProfile = useCallback(
     async (destProfile: number) => {
       if (!conn.conn) {
@@ -619,6 +640,7 @@ export default function Keyboard() {
               onAddClicked={addLayer}
               onRemoveClicked={removeLayer}
               onLayerNameChanged={changeLayerName}
+              onCloneLayer={doCloneLayer}
             />
           </div>
         )}
