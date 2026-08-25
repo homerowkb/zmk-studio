@@ -11,7 +11,6 @@ import { Request } from "@zmkfirmware/zmk-studio-ts-client";
 import { call_rpc } from "../rpc/logging";
 import {
   PhysicalLayout,
-  Keymap,
   SetLayerBindingResponse,
   SetLayerPropsResponse,
   BehaviorBinding,
@@ -21,8 +20,8 @@ import type { GetBehaviorDetailsResponse } from "@zmkfirmware/zmk-studio-ts-clie
 
 import { LayerPicker } from "./LayerPicker";
 import { PhysicalLayoutPicker } from "./PhysicalLayoutPicker";
+import { ProfilePicker } from "./ProfilePicker";
 import { Keymap as KeymapComp } from "./Keymap";
-import { useConnectedDeviceData } from "../rpc/useConnectedDeviceData";
 import { ConnectionContext } from "../rpc/ConnectionContext";
 import { UndoRedoContext } from "../undoRedo";
 import { BehaviorBindingPicker } from "../behaviors/BehaviorBindingPicker";
@@ -31,10 +30,11 @@ import { LockStateContext } from "../rpc/LockStateContext";
 import { LockState } from "@zmkfirmware/zmk-studio-ts-client/core";
 import { deserializeLayoutZoom, LayoutZoom } from "./PhysicalLayout";
 import { useLocalStorageState } from "../misc/useLocalStorageState";
+import { useKeymap } from "../context/keymap";
 
 type BehaviorMap = Record<number, GetBehaviorDetailsResponse>;
 
-function useBehaviors(): BehaviorMap {
+export function useBehaviors(): BehaviorMap {
   let connection = useContext(ConnectionContext);
   let lockState = useContext(LockStateContext);
 
@@ -158,6 +158,50 @@ function useLayouts(): [
   ];
 }
 
+function useProfiles(): [number, number, React.Dispatch<SetStateAction<number>>] {
+  let connection = useContext(ConnectionContext);
+  let lockState = useContext(LockStateContext);
+
+  const [profileCount, setProfileCount] = useState<number>(0);
+  const [activeProfile, setActiveProfile] = useState<number>(0);
+
+  useEffect(() => {
+    if (
+      !connection.conn ||
+      lockState != LockState.ZMK_STUDIO_CORE_LOCK_STATE_UNLOCKED
+    ) {
+      setProfileCount(0);
+      setActiveProfile(0);
+      return;
+    }
+
+    async function startRequest() {
+      if (!connection.conn) {
+        return;
+      }
+
+      const [countResp, activeResp] = await Promise.all([
+        call_rpc(connection.conn, { keymap: { getProfileCount: true } }),
+        call_rpc(connection.conn, { keymap: { getActiveProfile: true } }),
+      ]);
+
+      if (!ignore) {
+        setProfileCount(countResp?.keymap?.getProfileCount || 0);
+        setActiveProfile(activeResp?.keymap?.getActiveProfile || 0);
+      }
+    }
+
+    let ignore = false;
+    startRequest();
+
+    return () => {
+      ignore = true;
+    };
+  }, [connection, lockState]);
+
+  return [profileCount, activeProfile, setActiveProfile];
+}
+
 export default function Keyboard() {
   const [
     layouts,
@@ -165,15 +209,14 @@ export default function Keyboard() {
     selectedPhysicalLayoutIndex,
     setSelectedPhysicalLayoutIndex,
   ] = useLayouts();
-  const [keymap, setKeymap] = useConnectedDeviceData<Keymap>(
-    { keymap: { getKeymap: true } },
-    (keymap) => {
-      console.log("Got the keymap!");
-      return keymap?.keymap?.getKeymap;
-    },
-    true
-  );
 
+  const [profileCount, activeProfile, setActiveProfile] = useProfiles();
+
+  const {
+    keymap,
+    setKeymap,
+    updateKeymap,
+  } = useKeymap();
   const [keymapScale, setKeymapScale] = useLocalStorageState<LayoutZoom>("keymapScale", "auto", {
     deserialize: deserializeLayoutZoom,
   });
@@ -228,6 +271,67 @@ export default function Keyboard() {
       });
     },
     [undoRedo, selectedPhysicalLayoutIndex]
+  );
+
+  let doSelectProfile = useCallback(
+    async (profile: number) => {
+      if (!conn.conn) {
+        return;
+      }
+
+      let respSave = await call_rpc(conn.conn, { keymap: { saveChanges: true } });
+      if (!respSave.keymap?.saveChanges || respSave.keymap?.saveChanges.err) {
+        console.error("Failed to save changes", respSave.keymap?.saveChanges);
+      }
+
+      const resp = await call_rpc(conn.conn, {
+        keymap: { profileSelect: profile },
+      });
+
+      if (resp.keymap?.profileSelect?.ok !== undefined) {
+        setActiveProfile(resp.keymap.profileSelect.ok);
+        updateKeymap();
+      } else {
+        console.error("Failed to select profile", resp.keymap?.profileSelect?.err);
+      }
+    },
+    [conn, updateKeymap]
+  );
+
+  let doCloneLayer = useCallback(
+    async (sourceLayer: number, destLayer: number) => {
+      if (!conn.conn) {
+        return;
+      }
+
+      const resp = await call_rpc(conn.conn, {
+        keymap: { cloneLayer: { sourceLayer, destLayer } },
+      });
+
+      if (resp.keymap?.cloneLayer?.ok) {
+        updateKeymap();
+      } else {
+        console.error("Failed to clone layer", resp.keymap?.cloneLayer?.err);
+      }
+    },
+    [conn, selectedLayerIndex, updateKeymap]
+  );
+
+  let doCloneProfile = useCallback(
+    async (destProfile: number) => {
+      if (!conn.conn) {
+        return;
+      }
+
+      const resp = await call_rpc(conn.conn, {
+        keymap: { cloneProfile: { sourceProfile: activeProfile, destProfile } },
+      });
+
+      if (!resp.keymap?.cloneProfile?.ok) {
+        console.error("Failed to clone profile", resp.keymap?.cloneProfile?.err);
+      }
+    },
+    [conn, activeProfile]
   );
 
   let doUpdateBinding = useCallback(
@@ -502,7 +606,16 @@ export default function Keyboard() {
 
   return (
     <div className="grid grid-cols-[auto_1fr] grid-rows-[1fr_minmax(10em,auto)] bg-base-300 max-w-full min-w-0 min-h-0">
-      <div className="p-2 flex flex-col gap-2 bg-base-200 row-span-2">
+      <div className="p-2 flex flex-col gap-2 bg-base-200 row-span-2 min-w-44">
+        {profileCount > 1 && (
+          <ProfilePicker
+            profileCount={profileCount}
+            activeProfile={activeProfile}
+            onProfileClicked={doSelectProfile}
+            onCloneProfile={doCloneProfile}
+          />
+        )}
+
         {layouts && (
           <div className="col-start-3 row-start-1 row-end-2">
             <PhysicalLayoutPicker
@@ -525,6 +638,7 @@ export default function Keyboard() {
               onAddClicked={addLayer}
               onRemoveClicked={removeLayer}
               onLayerNameChanged={changeLayerName}
+              onCloneLayer={doCloneLayer}
             />
           </div>
         )}

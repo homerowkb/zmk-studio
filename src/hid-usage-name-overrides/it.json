@@ -1,0 +1,553 @@
+{
+    "7": {
+        "5": {
+            "short": "b",
+            "secondary": "B"
+        },
+        "17": {
+            "short": "n",
+            "secondary": "N"
+        },
+        "25": {
+            "short": "v",
+            "secondary": "V"
+        },
+        "30": {
+            "short": "1",
+            "secondary": "!"
+        },
+        "31": {
+            "short": "2",
+            "secondary": "\""
+        },
+        "32": {
+            "short": "3",
+            "secondary": "£"
+        },
+        "33": {
+            "short": "4",
+            "secondary": "$"
+        },
+        "34": {
+            "short": "5",
+            "secondary": "%"
+        },
+        "35": {
+            "short": "6",
+            "secondary": "&"
+        },
+        "36": {
+            "short": "7",
+            "secondary": "/"
+        },
+        "37": {
+            "short": "8",
+            "secondary": "("
+        },
+        "38": {
+            "short": "9",
+            "secondary": ")"
+        },
+        "39": {
+            "short": "0",
+            "secondary": "=",
+            "tertiary": "}"
+        },
+        "40": {
+            "short": "⏎",
+            "med": "⏎",
+            "long": "Return"
+        },
+        "41": {
+            "short": "Esc",
+            "long": "Escape"
+        },
+        "42": {
+            "short": "BkSp",
+            "med": "BkSpc",
+            "long": "Backspace"
+        },
+        "44": {
+            "short": "␣",
+            "med": "Space"
+        },
+        "45": {
+            "short": "'",
+            "med": "Dash",
+            "secondary": "?",
+            "tertiary": "`"
+        },
+        "46": {
+            "short": "ì",
+            "med": "Equals",
+            "secondary": "^",
+            "tertiary": "~"
+        },
+        "47": {
+            "short": "è",
+            "secondary": "é",
+            "tertiary": "["
+        },
+        "48": {
+            "short": "+",
+            "secondary": "*",
+            "tertiary": "]"
+        },
+        "49": {
+            "short": "ù",
+            "secondary": "§"
+        },
+        "50": {
+            "short": "NUHS",
+            "long": "NonUS Hash"
+        },
+        "51": {
+            "short": "ò",
+            "secondary": "ç",
+            "tertiary": "@"
+        },
+        "52": {
+            "short": "à",
+            "secondary": "°",
+            "tertiary": "#"
+        },
+        "53": {
+            "short": "\\",
+            "secondary": "|",
+            "tertiary": "¬"
+        },
+        "54": {
+            "short": ",",
+            "secondary": ";"
+        },
+        "55": {
+            "short": ".",
+            "secondary": ":",
+            "tertiary": "·"
+        },
+        "56": {
+            "short": "-",
+            "secondary": "_"
+        },
+        "57": {
+            "short": "Cap",
+            "long": "Caps Lock"
+        },
+        "70": {
+            "short": "PrSc",
+            "long": "Print Scr"
+        },
+        "71": {
+            "short": "ScLk",
+            "long": "ScrollLock"
+        },
+        "72": {
+            "short": "Paus",
+            "med": "Pause"
+        },
+        "73": {
+            "short": "Ins",
+            "med": "Insert"
+        },
+        "75": {
+            "short": "PgUp",
+            "med": "PageUp",
+            "long": "Page Up"
+        },
+        "76": {
+            "short": "Del",
+            "med": "Delete"
+        },
+        "78": {
+            "short": "PgDn",
+            "med": "PageDn",
+            "long": "Page Down"
+        },
+        "79": {
+            "short": "→"
+        },
+        "80": {
+            "short": "←"
+        },
+        "81": {
+            "short": "↓"
+        },
+        "82": {
+            "short": "↑"
+        },
+        "83": {
+            "short": "Num",
+            "med": "NumLck",
+            "long": "Num Lock"
+        },
+        "84": {
+            "short": "/"
+        },
+        "85": {
+            "short": "*"
+        },
+        "86": {
+            "short": "-"
+        },
+        "87": {
+            "short": "+"
+        },
+        "88": {
+            "short": "Ent",
+            "med": "KP Ent",
+            "long": "KP Enter"
+        },
+        "89": {
+            "short": "1 En",
+            "med": "1 End"
+        },
+        "90": {
+            "short": "2 ↓"
+        },
+        "91": {
+            "short": "3 PD",
+            "med": "3 PgDn"
+        },
+        "92": {
+            "short": "4 ←"
+        },
+        "93": {
+            "short": "5"
+        },
+        "94": {
+            "short": "6 →"
+        },
+        "95": {
+            "short": "7 Hm",
+            "med": "7 Home"
+        },
+        "96": {
+            "short": "8 ↑"
+        },
+        "97": {
+            "short": "9 PU",
+            "med": "9 PgUp"
+        },
+        "98": {
+            "short": "0 In",
+            "med": "0 Ins",
+            "long": "0 Insert"
+        },
+        "99": {
+            "short": ". Dl",
+            "med": ". Del",
+            "long": ". Delete"
+        },
+        "100": {
+            "short": "<",
+            "secondary": ">",
+            "tertiary": "«"
+        },
+        "101": {
+            "short": "Appl",
+            "med": "Appl",
+            "long": "Applicat'n"
+        },
+        "102": {
+            "short": "Power",
+            "med": "Power"
+        },
+        "103": {
+            "short": "="
+        },
+        "133": {
+            "short": ","
+        },
+        "134": {
+            "short": "="
+        },
+        "176": {
+            "short": "00"
+        },
+        "177": {
+            "short": "000"
+        },
+        "224": {
+            "short": "Ctrl",
+            "med": "L Ctrl"
+        },
+        "225": {
+            "short": "Shft",
+            "med": "L Shft",
+            "long": "L Shift"
+        },
+        "226": {
+            "short": "Alt",
+            "med": "L Alt",
+            "long": "Left Alt"
+        },
+        "227": {
+            "short": "GUI",
+            "med": "L GUI",
+            "long": "Left GUI"
+        },
+        "228": {
+            "short": "Ctrl",
+            "med": "R Ctrl"
+        },
+        "229": {
+            "short": "Shft",
+            "med": "R Shft",
+            "long": "R Shift"
+        },
+        "230": {
+            "short": "AltG",
+            "med": "AltGr"
+        },
+        "231": {
+            "short": "GUI",
+            "med": "R GUI",
+            "long": "Right GUI"
+        }
+    },
+    "12": {
+        "2": {
+            "short": "🔢"
+        },
+        "3": {
+            "short": "⚙️⌨"
+        },
+        "4": {
+            "short": "🎤"
+        },
+        "5": {
+            "short": "🎧"
+        },
+        "6": {
+            "short": "🎵 EQ"
+        },
+        "48": {
+            "short": "⚡"
+        },
+        "49": {
+            "short": "🔄"
+        },
+        "50": {
+            "short": "💤"
+        },
+        "51": {
+            "short": "💤🔜"
+        },
+        "52": {
+            "short": "💤⚙️"
+        },
+        "53": {
+            "short": "✨"
+        },
+        "54": {
+            "short": "📊⌨"
+        },
+        "64": {
+            "short": "📜"
+        },
+        "65": {
+            "short": "📜👈"
+        },
+        "66": {
+            "short": "📜⬆️"
+        },
+        "67": {
+            "short": "📜⬇️"
+        },
+        "68": {
+            "short": "📜⬅️"
+        },
+        "69": {
+            "short": "📜➡️"
+        },
+        "70": {
+            "short": "📜🏃‍♂️"
+        },
+        "71": {
+            "short": "📜🔼"
+        },
+        "72": {
+            "short": "📜🔽"
+        },
+        "96": {
+            "short": "📺📊"
+        },
+        "97": {
+            "short": "📺💬"
+        },
+        "98": {
+            "short": "📺🎯"
+        },
+        "99": {
+            "short": "📼📺"
+        },
+        "100": {
+            "short": "🗣️"
+        },
+        "101": {
+            "short": "🖼️"
+        },
+        "102": {
+            "short": "❄️"
+        },
+        "103": {
+            "short": "🔳🔁"
+        },
+        "104": {
+            "short": "🔳🔃"
+        },
+        "105": {
+            "short": "🔴"
+        },
+        "106": {
+            "short": "🟢"
+        },
+        "107": {
+            "short": "🔵"
+        },
+        "108": {
+            "short": "🟡"
+        },
+        "109": {
+            "short": "📐"
+        },
+        "110": {
+            "short": "🎨"
+        },
+        "111": {
+            "short": "🔆🔼"
+        },
+        "112": {
+            "short": "🔅🔽"
+        },
+        "113": {
+            "short": "🔆"
+        },
+        "114": {
+            "short": "🌞🌑"
+        },
+        "115": {
+            "short": "🌙"
+        },
+        "116": {
+            "short": "🌞"
+        },
+        "117": {
+            "short": "🌅"
+        },
+        "118": {
+            "short": "📷✔️"
+        },
+        "119": {
+            "short": "📷❌"
+        },
+        "120": {
+            "short": "📷🔁"
+        },
+        "136": {
+            "short": "👉💻"
+        },
+        "137": {
+            "short": "👉📺"
+        },
+        "138": {
+            "short": "👉🌍"
+        },
+        "139": {
+            "short": "👉📀"
+        },
+        "140": {
+            "short": "👉📞"
+        },
+        "141": {
+            "short": "👉📅"
+        },
+        "142": {
+            "short": "👉📱"
+        },
+        "143": {
+            "short": "👉🎮"
+        },
+        "144": {
+            "short": "👉💬"
+        },
+        "145": {
+            "short": "👉💿"
+        },
+        "146": {
+            "short": "👉📼"
+        },
+        "147": {
+            "short": "👉📻"
+        },
+        "148": {
+            "short": "🛑"
+        },
+        "149": {
+            "short": "❓"
+        },
+        "150": {
+            "short": "👉🎞️"
+        },
+        "151": {
+            "short": "👉🔌"
+        },
+        "152": {
+            "short": "👉📡"
+        },
+        "153": {
+            "short": "👉🛡️"
+        },
+        "154": {
+            "short": "👉🏠"
+        },
+        "155": {
+            "short": "👉📲"
+        },
+        "176": {
+            "short": "▶️"
+        },
+        "177": {
+            "short": "⏸️"
+        },
+        "178": {
+            "short": "⏺️"
+        },
+        "179": {
+            "short": "⏩"
+        },
+        "180": {
+            "short": "⏪"
+        },
+        "181": {
+            "short": "⏭️"
+        },
+        "182": {
+            "short": "⏮️"
+        },
+        "183": {
+            "short": "⏹️"
+        },
+        "184": {
+            "short": "⏏️"
+        },
+        "185": {
+            "short": "🔀"
+        },
+        "188": {
+            "short": "🔁"
+        },
+        "205": {
+            "short": "⏯️"
+        },
+        "226": {
+            "short": "🔇"
+        },
+        "233": {
+            "short": "🔊"
+        },
+        "234": {
+            "short": "🔉"
+        }
+    }
+}

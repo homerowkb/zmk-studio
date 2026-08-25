@@ -1,11 +1,13 @@
-import { Pencil, Minus, Plus } from "lucide-react";
-import { useCallback, useMemo, useState } from "react";
+import { Pencil, Minus, Plus, Stamp } from "lucide-react";
+import { useCallback, useMemo, useRef, useState } from "react";
 import {
   DropIndicator,
   Label,
   ListBox,
   ListBoxItem,
+  Popover,
   Selection,
+  Text,
   useDragAndDrop,
 } from "react-aria-components";
 import { useModalRef } from "../misc/useModalRef";
@@ -18,6 +20,7 @@ interface Layer {
 
 export type LayerClickCallback = (index: number) => void;
 export type LayerMovedCallback = (index: number, destination: number) => void;
+export type LayerCloneCallback = (sourceIndex: number, destIndex: number) => void;
 
 interface LayerPickerProps {
   layers: Array<Layer>;
@@ -34,6 +37,7 @@ interface LayerPickerProps {
     oldName: string,
     newName: string
   ) => void | Promise<void>;
+  onCloneLayer?: LayerCloneCallback;
 }
 
 interface EditLabelData {
@@ -102,6 +106,11 @@ const EditLabelModal = ({
   );
 };
 
+interface CloneMenuState {
+  sourceId: number;
+  triggerEl: HTMLButtonElement;
+}
+
 export const LayerPicker = ({
   layers,
   selectedLayerIndex,
@@ -112,11 +121,12 @@ export const LayerPicker = ({
   onAddClicked,
   onRemoveClicked,
   onLayerNameChanged,
+  onCloneLayer,
   ...props
 }: LayerPickerProps) => {
-  const [editLabelData, setEditLabelData] = useState<EditLabelData | null>(
-    null
-  );
+  const [editLabelData, setEditLabelData] = useState<EditLabelData | null>(null);
+  const [cloneMenu, setCloneMenu] = useState<CloneMenuState | null>(null);
+  const cloneTriggerRef = useRef<HTMLButtonElement | null>(null);
 
   const layer_items = useMemo(() => {
     return layers.map((l, i) => ({
@@ -132,7 +142,6 @@ export const LayerPicker = ({
       if (s === "all") {
         return;
       }
-
       onLayerClicked?.(layer_items.findIndex((l) => s.has(l.id)));
     },
     [onLayerClicked, layer_items]
@@ -164,6 +173,22 @@ export const LayerPicker = ({
     },
     [onLayerNameChanged]
   );
+
+  const openCloneMenu = useCallback((sourceId: number, triggerEl: HTMLButtonElement) => {
+    cloneTriggerRef.current = triggerEl;
+    setCloneMenu({ sourceId, triggerEl });
+  }, []);
+
+  const closeCloneMenu = useCallback(() => {
+    setCloneMenu(null);
+  }, []);
+
+  const sourceItem = cloneMenu
+    ? layer_items.find((l) => l.id === cloneMenu.sourceId)
+    : null;
+  const cloneTargets = sourceItem
+    ? layer_items.filter((l) => l.id !== cloneMenu!.sourceId)
+    : [];
 
   return (
     <div className="flex flex-col min-w-40">
@@ -216,7 +241,7 @@ export const LayerPicker = ({
         {(layer_item) => (
           <ListBoxItem
             textValue={layer_item.name}
-            className="p-1 b-1 my-1 group grid grid-cols-[1fr_auto] items-center aria-selected:bg-primary aria-selected:text-primary-content border rounded border-transparent border-solid hover:bg-base-300"
+            className="p-1 b-1 my-1 group grid grid-cols-[1fr_auto_auto] items-center aria-selected:bg-primary aria-selected:text-primary-content border rounded border-transparent border-solid hover:bg-base-300"
           >
             <span>{layer_item.name}</span>
             <Pencil
@@ -225,9 +250,57 @@ export const LayerPicker = ({
                 setEditLabelData({ id: layer_item.id, name: layer_item.name })
               }
             />
+            {onCloneLayer && (
+              <button
+                type="button"
+                className="p-0.5 rounded invisible group-hover:visible"
+                aria-label="Clone layer"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  openCloneMenu(layer_item.id, e.currentTarget);
+                }}
+              >
+                <Stamp className="h-4 w-4 mx-1" />
+              </button>
+            )}
           </ListBoxItem>
         )}
       </ListBox>
+
+      {onCloneLayer && (
+        <Popover
+          triggerRef={cloneTriggerRef as React.RefObject<HTMLButtonElement>}
+          isOpen={cloneMenu !== null}
+          onOpenChange={(open) => { if (!open) closeCloneMenu(); }}
+          placement="right top"
+          className="shadow-md text-base-content rounded border border-base-content bg-base-100"
+        >
+          <div className="text-xs font-semibold text-base-content/60 px-2 pt-2 pb-1">
+            Clone into…
+          </div>
+          <ListBox
+            items={cloneTargets}
+            onAction={(key) => {
+              const dest = cloneTargets.find((l) => l.id === key);
+              if (dest && sourceItem) {
+                onCloneLayer(sourceItem.index, dest.index);
+              }
+              closeCloneMenu();
+            }}
+            className="min-w-32 outline-none"
+          >
+            {(layer) => (
+              <ListBoxItem
+                id={layer.id}
+                textValue={layer.name}
+                className="p-1 px-2 cursor-pointer hover:bg-base-200 first:rounded-t last:rounded-b outline-none"
+              >
+                <Text slot="label">{layer.name}</Text>
+              </ListBoxItem>
+            )}
+          </ListBox>
+        </Popover>
+      )}
     </div>
   );
 };
